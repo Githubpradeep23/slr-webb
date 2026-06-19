@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import React from 'react';
 import Image from 'next/image';
 import Main from '@/components/Main';
@@ -5,18 +7,21 @@ import SericeMan2 from '/public/assets/images/services-man2.png';
 
 const page = async () => {
   let apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  const res = await fetch(`${apiUrl}/get/services`, { cache: 'no-store' });
-  if (!res.ok) {
-    // This will activate the closest `error.js` Error Boundary
-    throw new Error('Failed to fetch data')
+
+  let servicesData = null;
+  try {
+    const res = await fetch(`${apiUrl}/get/services`, { cache: 'no-store' });
+    if (res.ok) {
+      servicesData = await res.json();
+    }
+  } catch (e) {
+    console.error('Failed to fetch services:', e.message);
   }
-  const servicesData = await res.json();
 
   return (
     <>
 
       <Main
-        //  bannerBg={"servicesBgBannerImg"}
         bgTitle={"Elevate,"}
         bgTitle1={"Your Pitch to"}
         bgTitle2={"The Next Level!"}
@@ -45,14 +50,13 @@ const page = async () => {
                 {servicesData && servicesData.data.map((list, index) => (
                   <div key={list.id} className='flex flex-row items-center justify-between'>
                     <div className='m-auto text-left'>
-                      <Image src={list.image} width='30' height='30' alt='/' />
+                      <Image src={list.image} width='30' height='30' alt={list.title} />
                     </div>
                     <div className='text-left'>
                       <span className='text-[14px]'>{list.title}</span>
                     </div>
                   </div>
-                ))
-                }
+                ))}
 
               </div>
             </div>
@@ -63,14 +67,13 @@ const page = async () => {
                 {servicesData && servicesData.data.map((list, index) => (
                   <div key={list.id} className='flex flex-row items-center justify-between'>
                     <div className='m-auto text-left'>
-                      <Image src={list.image} width='30' height='30' alt='/' />
+                      <Image src={list.image} width='30' height='30' alt={list.title} />
                     </div>
                     <div className='text-left'>
                       <span className='text-[14px]'>{list.title}</span>
                     </div>
                   </div>
-                ))
-                }
+                ))}
               </div>
             </div>
 
@@ -88,7 +91,7 @@ const page = async () => {
               We specialize in providing simple yet accurate financial modeling tools for startups through our tested framework
             </p>
 
-            <Image src={SericeMan2} alt='/' />
+            <Image src={SericeMan2} alt='Financial Model' />
 
           </div>
 
@@ -101,13 +104,12 @@ const page = async () => {
                   <div key={list.id} className="w-full c-card block bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden">
                     <div className="p-4">
                       <div className='flex justify-center'>
-                        <Image src={list.image} width='30' height='30' alt='/' />
+                        <Image src={list.image} width='30' height='30' alt={list.title} />
                       </div>
                       <p className="text-[12px] p-2 text-justify">{list.title}</p>
                     </div>
                   </div>
-                ))
-                }
+                ))}
 
               </div>
             </div>
@@ -136,13 +138,12 @@ const page = async () => {
                   <div key={list.id} className="md:w-[90%] bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden">
                     <div className="p-4">
                       <div className='flex justify-center'>
-                        <Image src={list.image} width='30' height='30' alt='/' />
+                        <Image src={list.image} width='30' height='30' alt={list.title} />
                       </div>
                       <p className="text-[12px] p-2 text-justify">{list.title}</p>
                     </div>
                   </div>
-                ))
-                }
+                ))}
 
               </div>
             </div>
@@ -155,4 +156,5 @@ const page = async () => {
     </>
   )
 }
+
 export default page;
