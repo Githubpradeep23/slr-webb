@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic';
+
 import About from '@/components/About'
 import Blog from '@/components/Blog'
 import Contact from '@/components/Contact'
@@ -11,12 +13,15 @@ import Brandss from '@/components/Brandss'
 export default async function Home() {
    let apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-   const res = await fetch(`${apiUrl}/get/blogs`, { cache: 'no-store', method: 'GET' });
-   if (!res.ok) {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error('Failed to fetch data')
+   let blogsData = [];
+   try {
+      const res = await fetch(`${apiUrl}/get/blogs`, { cache: 'no-store', method: 'GET' });
+      if (res.ok) {
+         blogsData = await res.json();
+      }
+   } catch (e) {
+      console.error('Failed to fetch blogs:', e.message);
    }
-   const blogsData = await res.json();
 
    return (
 
@@ -42,7 +47,7 @@ export default async function Home() {
                         </h2>
 
                         <div className='flex justify-center mb-4'>
-                           <Image src={"../../assets/images/4pillar.png"} width='250' height='300' alt='/' />
+                           <Image src={"../../assets/images/4pillar.png"} width='250' height='300' alt='4 pillars' />
                         </div>
                      </div>
 
@@ -55,7 +60,7 @@ export default async function Home() {
                               <div className="w-[180px] bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden hover:border-[#75EAE2] border-2">
                                  <div className="p-4">
                                     <div className='flex justify-center'>
-                                       <Image src={"../../assets/images/Icon1.png"} width='1000' height='1000' className='w-10' alt='/' />
+                                       <Image src={"../../assets/images/Icon1.png"} width='1000' height='1000' className='w-10' alt='Customer Centric icon' />
                                     </div>
                                     <p className="text-[14px] p-2 text-center font-semibold">{"Customer Centric"}</p>
                                  </div>
@@ -80,7 +85,7 @@ export default async function Home() {
                               <div className="w-[180px] bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden hover:border-[#75EAE2] border-2">
                                  <div className="p-4">
                                     <div className='flex justify-center'>
-                                       <Image src={"../../assets/images/Icon2.png"} width='1000' height='1000' className='w-10' alt='/' />
+                                       <Image src={"../../assets/images/Icon2.png"} width='1000' height='1000' className='w-10' alt='Risk Management icon' />
                                     </div>
                                     <p className="text-[14px] p-2 text-center font-semibold">{"Risk Management"}</p>
                                  </div>
@@ -104,7 +109,7 @@ export default async function Home() {
                               <div className="w-[180px] bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden hover:border-[#75EAE2] border-2">
                                  <div className="p-4">
                                     <div className='flex justify-center'>
-                                       <Image src={"../../assets/images/icon3.png"}width='1000' height='1000' className='w-10' alt='/' />
+                                       <Image src={"../../assets/images/icon3.png"}width='1000' height='1000' className='w-10' alt='Experience icon' />
                                     </div>
                                     <p className="text-[14px] p-2 text-center font-semibold">{"Experience"}</p>
                                  </div>
@@ -114,7 +119,7 @@ export default async function Home() {
                            <p className="text-body-color text-xs mt-4 text-justify">
                               With deep industry knowledge
                               experience in both products and
-                              services; we use a “Why NOT"
+                              services; we use a "Why NOT"
                               approach to align with leading
                               practices, processes, and system
                               designs.
@@ -129,7 +134,7 @@ export default async function Home() {
                               <div className="w-[180px] bg-white shadow-md hover:shadow-xl rounded-lg overflow-hidden hover:border-[#75EAE2] border-2">
                                  <div className="p-4">
                                     <div className='flex justify-center'>
-                                       <Image src={"../../assets/images/icon4.png"} width='1000' height='1000' className='w-8' alt='/' />
+                                       <Image src={"../../assets/images/icon4.png"} width='1000' height='1000' className='w-8' alt='Strategic Vision icon' />
                                     </div>
                                     <p className="text-[14px] p-2 text-center font-semibold">{"Strategic Vision"}</p>
                                  </div>
@@ -158,7 +163,7 @@ export default async function Home() {
                <div className="md:grid grid-cols-3 gap-16">
 
                   <div className="">
-                     <Image width={"1000"} height={"1000"} src={"../assets/images/home-banner/servicenew.png"} className='w-full object-cover' alt='/' />
+                     <Image width={"1000"} height={"1000"} src={"../assets/images/home-banner/servicenew.png"} className='w-full object-cover' alt='Services' />
                   </div>
 
                   <div className="md:col-span-2">
@@ -178,7 +183,7 @@ export default async function Home() {
                         <div className="w-full px-4">
                            <div className="mb-8 rounded-[20px] bg-white">
                               <div className="bg-primary mb-1 flex h-[70px] w-[70px] items-center justify-center rounded-2xl">
-                                 <Image width={"1000"} height={"1000"} src={"../assets/images/servicen1.png"} className='object-cover w-32' alt='/' />
+                                 <Image width={"1000"} height={"1000"} src={"../assets/images/servicen1.png"} className='object-cover w-32' alt='Software Development' />
                               </div>
                               <h4 className="text-dark mb-3 text-sm font-semibold">
                                  Software Development
@@ -194,7 +199,7 @@ export default async function Home() {
                         <div className="w-full px-4">
                            <div className="mb-8 rounded-[20px] bg-white">
                               <div className="bg-primary mb-1 flex h-[70px] w-[70px] items-center justify-center rounded-2xl">
-                                 <Image width={"1000"} height={"1000"} src={"../assets/images/servicen2.png"} className='object-cover w-32' alt='/' />
+                                 <Image width={"1000"} height={"1000"} src={"../assets/images/servicen2.png"} className='object-cover w-32' alt='Web Development' />
                               </div>
                               <h4 className="text-dark mb-3 text-sm font-semibold">
                                  Web Development
@@ -210,7 +215,7 @@ export default async function Home() {
                         <div className="w-full px-4">
                            <div className="mb-8 rounded-[20px] bg-white">
                               <div className="bg-primary mb-1 flex h-[70px] w-[70px] items-center justify-center rounded-2xl">
-                                 <Image width={"1000"} height={"1000"} src={"../assets/images/servicen2.png"} className='object-cover w-32' alt='/' />
+                                 <Image width={"1000"} height={"1000"} src={"../assets/images/servicen2.png"} className='object-cover w-32' alt='Web Development' />
                               </div>
                               <h4 className="text-dark mb-3 text-sm font-semibold">
                                  Web Development
@@ -238,7 +243,7 @@ export default async function Home() {
                   <div className='bg-mpbile_enabled_decks bg-no-repeat bg-cover px-2 md:my-2'>
                      <div className='flex justify-between'>
                         <h2 className="font-bold md:text-3xl text-2xl text-[#152C4E] text-left">UI-Apps SAP Solution</h2>
-                        <Image width={"1000"} height={"1000"} className='md:w-32' src={"../assets/images/sap-partner.png"} />
+                        <Image width={"1000"} height={"1000"} className='md:w-32' src={"../assets/images/sap-partner.png"} alt='SAP Partner' />
                      </div>
 
                      <h2 className="font-bold md:text-1xl text-2xl text-[#152C4E] text-left">Automated Data Processing, Accelerated
@@ -256,7 +261,7 @@ export default async function Home() {
                   <div className='bg-mpbile_enabled_decks bg-no-repeat bg-cover px-2 md:my-5'>
                      <div className='flex justify-between'>
                         <h2 className="font-bold md:text-3xl text-2xl text-[#152C4E] text-left">ERP Solution</h2>
-                        <Image width={"1000"} height={"1000"} className='md:w-32' src={"../assets/images/erp-solution.png"} />
+                        <Image width={"1000"} height={"1000"} className='md:w-32' src={"../assets/images/erp-solution.png"} alt='ERP Solution' />
                      </div>
 
                      <h2 className="font-bold md:text-1xl text-2xl text-[#152C4E] text-left">Empowering Education, Connecting Futures
@@ -268,7 +273,7 @@ export default async function Home() {
                </div>
 
                <div className='w-full h-auto -mt-20 m-auto flex items-center justify-center p-4 hover:scale-105 ease-in duration-300'>
-                  <Image width={"1000"} height={"1000"} src={AboutImg} className='w-full' alt='/' />
+                  <Image width={"1000"} height={"1000"} src={AboutImg} className='w-full' alt='About us' />
                </div>
             </div>
          </div>
@@ -276,7 +281,7 @@ export default async function Home() {
          <div className='mx-auto md:max-w-6xl container'>
             <div className='md:grid grid-cols-2 md:my-20'>
                <div className="rounded-lg">
-                  <Image width={"1000"} height={"1000"} src={"../../assets/images/sapsolution-circule.png"} className='' alt='/' />
+                  <Image width={"1000"} height={"1000"} src={"../../assets/images/sapsolution-circule.png"} className='' alt='SAP Solution' />
                </div>
 
                <div className='mb-8 px-12'>
@@ -309,7 +314,7 @@ export default async function Home() {
                </div>
 
                <div className="rounded-lg">
-                  <Image width={"1000"} height={"1000"} src={"../../assets/images/consultant.jpg"} className='' alt='/' />
+                  <Image width={"1000"} height={"1000"} src={"../../assets/images/consultant.jpg"} className='' alt='IT Consulting' />
                </div>
 
             </div>
@@ -319,7 +324,7 @@ export default async function Home() {
             <div className='md:grid grid-cols-2 md:my-20'>
 
                <div className="rounded-lg flex justify-center">
-                  <Image width={"1000"} height={"1000"} src={"../../assets/images/stremming.png"} className='md:w-[400px]' alt='/' />
+                  <Image width={"1000"} height={"1000"} src={"../../assets/images/stremming.png"} className='md:w-[400px]' alt='Streamline School Management' />
                </div>
 
                <div className='mb-8 px-12'>
